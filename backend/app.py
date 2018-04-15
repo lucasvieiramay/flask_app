@@ -4,6 +4,7 @@ from local_settings import POSTGRES
 from flask_sqlalchemy import SQLAlchemy
 from persons.services import PersonService
 from utils import default_response
+from sqlalchemy import exc
 
 
 app = Flask(__name__)
@@ -31,8 +32,16 @@ def person_add():
         'birth_date': request.args.get('birth_date'),
         'email': request.args.get('email'),
     }
-    person = service.add_obj(**params)
-    return default_response(data=person, status=200)
+    try:
+        data = service.add_obj(**params)
+        status_code = 200
+    except exc.IntegrityError:
+        status_code = 409
+        data = 'Error: You are trying to insert a Duplicated value'
+    except:
+        status_code = 500
+        data = 'Error: Internal server error'
+    return default_response(data=data, status=status_code)
 
 
 if __name__ == '__main__':
