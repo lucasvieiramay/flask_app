@@ -1,36 +1,38 @@
 import os
-from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
-from utils import default_response
+from flask import Flask, abort, redirect, request
 from local_settings import POSTGRES
+from flask_sqlalchemy import SQLAlchemy
+from persons.services import PersonService
+from utils import default_response
 
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://%(user)s:\
 %(pw)s@%(host)s:%(port)s/%(db)s' % POSTGRES
-
 db = SQLAlchemy(app)
+db.init_app(app)
 
 
-class Person(db.Model):
-    __tablename__ = 'persons'
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(150), unique=False)
-    doc_id = db.Column(db.String(11), unique=True)  # CPF
-    # picture = db.Column(db.LargeBinary)
-    birth_date = db.Column(db.Date)
-    email = db.Column(db.String(120), unique=True)
-
-    def __repr__(self):
-        return '<id {}>'.format(self.id)
-
-
-@app.route('/persons/list')
+@app.route('/persons/list', methods=['GET'])
 def person_list():
-    data = Person.query.all()
+    service = PersonService()
+    data = service.get_all_objects()
     response = default_response(data=data, status=200)
     return response
+
+
+@app.route('/person/add', methods=['POST'])
+def person_add():
+    service = PersonService()
+    params = {
+        'name': request.args.get('name'),
+        'doc_id': request.args.get('doc_id'),
+        'birth_date': request.args.get('birth_date'),
+        'email': request.args.get('email'),
+    }
+    person = service.add_obj(**params)
+    return default_response(data=person, status=200)
 
 
 if __name__ == '__main__':
