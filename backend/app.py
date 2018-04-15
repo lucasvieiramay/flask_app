@@ -47,7 +47,17 @@ def person_edit(id):
     params = service.set_parameters(request)
     params['id'] = id
     data = service.update_obj(**params)
+    if not data:
+        data = 'Error: One of the following ' \
+               'fields are duplicated: name, doc_id, email'
     return default_response(data=data, status=200)
+
+
+@app.route('/person/remove/<person_id>', methods=['DELETE'])
+def person_remove(person_id):
+    service = PersonService()
+    service.remove_obj(person_id)
+    return default_response(data='Object removed', status=200)
 
 
 if __name__ == '__main__':

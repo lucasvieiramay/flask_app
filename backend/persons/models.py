@@ -16,7 +16,6 @@ class Person(db.Model):
     name = db.Column(
         db.String(150), unique=False, nullable=False)
     birth_date = db.Column(db.Date, unique=False)
-    deleted = db.Column(db.Boolean, default=False)
 
 
 class PersonSchema(ma.ModelSchema):

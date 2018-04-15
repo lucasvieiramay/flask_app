@@ -1,5 +1,6 @@
 from persons.models import Person, PersonSchema
 from flask_sqlalchemy import SQLAlchemy
+from flask import abort
 
 db = SQLAlchemy()
 
@@ -28,14 +29,29 @@ class PersonService():
         obj = Person.query.get(params['id'])
         for field in params.keys():
             if field != 'id' and params[field]:
+                if field == 'doc_id':
+                    duplicated = Person.query.filter(
+                        Person.doc_id == params['doc_id'],
+                        Person.id != params['id'])
+                    if duplicated.all():
+                        # Already has this num_id on our database
+                        return False
+                elif field == 'email':
+                    duplicated = Person.query.filter(
+                        Person.email == params['email'],
+                        Person.id != params['id'])
+                    if duplicated.all():
+                        # Already has this email on our database
+                        return False
                 setattr(obj, field, params[field])
         db.session.commit()
         return self.person_schema.dump(obj).data
 
     def remove_obj(self, obj):
         if int(obj):
-            obj = Person.query.get(obj)
-
+            obj = Person.query.filter_by(id=obj).first()
+            if not obj:
+                abort(404)
         db.session.delete(obj)
         db.session.commit()
         return True
