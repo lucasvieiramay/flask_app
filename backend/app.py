@@ -1,5 +1,5 @@
 import os
-from flask import Flask, abort, redirect, request
+from flask import Flask, request
 from local_settings import POSTGRES
 from flask_sqlalchemy import SQLAlchemy
 from persons.services import PersonService
