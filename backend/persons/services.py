@@ -37,3 +37,8 @@ class PersonService():
         db.session.delete(obj)
         db.session.commit()
         return True
+
+    def validade_field(self, **params):
+        if 'name' and 'doc_id' and 'email' in params.keys():
+            return True
+        return False

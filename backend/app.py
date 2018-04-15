@@ -1,5 +1,4 @@
 import os
-import json
 from flask import Flask, abort, redirect, request
 from local_settings import POSTGRES
 from flask_sqlalchemy import SQLAlchemy
@@ -33,17 +32,23 @@ def person_add():
         'birth_date': request.form.get('birth_date'),
         'email': request.form.get('email'),
     }
-    try:
-        data = service.add_obj(**params)
-        status_code = 200
-    except exc.IntegrityError:
-        status_code = 409
-        data = 'Error: You are trying to insert a Duplicated value'
-    except exc.InvalidRequestError:
-        status_code = 409
-        data = 'Error: You are trying to insert a Duplicated value'
-
+    if service.validade_field(**params):
+        try:
+            data = service.add_obj(**params)
+            status_code = 200
+        except exc.IntegrityError as err:
+            status_code = 409
+            data = 'Error: {}'.format(err)
+    else:
+        data = 'Error: The following fields are not ' \
+               'nullable: name, doc_id, email'
+        status_code = 400
     return default_response(data=data, status=status_code)
+
+
+@app.route('/person/edit/<id>', methods=['PATCH'])
+def person_edit(id):
+    return 'sim'
 
 
 if __name__ == '__main__':
