@@ -1,4 +1,5 @@
 import os
+import json
 from flask import Flask, abort, redirect, request
 from local_settings import POSTGRES
 from flask_sqlalchemy import SQLAlchemy
@@ -27,10 +28,10 @@ def person_list():
 def person_add():
     service = PersonService()
     params = {
-        'name': request.args.get('name'),
-        'doc_id': request.args.get('doc_id'),
-        'birth_date': request.args.get('birth_date'),
-        'email': request.args.get('email'),
+        'name': request.form.get('name'),
+        'doc_id': request.form.get('doc_id'),
+        'birth_date': request.form.get('birth_date'),
+        'email': request.form.get('email'),
     }
     try:
         data = service.add_obj(**params)
@@ -38,9 +39,10 @@ def person_add():
     except exc.IntegrityError:
         status_code = 409
         data = 'Error: You are trying to insert a Duplicated value'
-    except:
-        status_code = 500
-        data = 'Error: Internal server error'
+    except exc.InvalidRequestError:
+        status_code = 409
+        data = 'Error: You are trying to insert a Duplicated value'
+
     return default_response(data=data, status=status_code)
 
 
