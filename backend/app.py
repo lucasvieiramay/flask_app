@@ -26,12 +26,7 @@ def person_list():
 @app.route('/person/add', methods=['POST'])
 def person_add():
     service = PersonService()
-    params = {
-        'name': request.form.get('name'),
-        'doc_id': request.form.get('doc_id'),
-        'birth_date': request.form.get('birth_date'),
-        'email': request.form.get('email'),
-    }
+    params = service.set_parameters(request)
     if service.validade_field(**params):
         try:
             data = service.add_obj(**params)
@@ -48,7 +43,11 @@ def person_add():
 
 @app.route('/person/edit/<id>', methods=['PATCH'])
 def person_edit(id):
-    return 'sim'
+    service = PersonService()
+    params = service.set_parameters(request)
+    params['id'] = id
+    data = service.update_obj(**params)
+    return default_response(data=data, status=200)
 
 
 if __name__ == '__main__':
