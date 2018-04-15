@@ -52,6 +52,8 @@ class PersonService():
             obj = Person.query.filter_by(id=obj).first()
             if not obj:
                 abort(404)
+        # prevents the object from being used in another session
+        db.session.close_all()
         db.session.delete(obj)
         db.session.commit()
         return True
