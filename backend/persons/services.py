@@ -15,18 +15,17 @@ class PersonService():
     def filter_objects(self, filter_field):
         list_obj = []
         if filter_field.get('name'):
-            name = '%{}%'.format(filter_field.get('name'))
-            list_obj = Person.query.filter(
-                Person.name.ilike(name)).all()
+            list_obj = Person().query_by_name(
+                filter_field.get('name'))
         elif filter_field.get('email'):
-            email = '%{}%'.format(filter_field.get('email'))
-            list_obj = Person.query.filter(Person.email.ilike(email)).all()
+            list_obj = Person().query_by_email(
+                filter_field.get('email'))
         elif filter_field.get('birth_date'):
-            list_obj = Person.query.filter(
-                Person.birth_date == filter_field.get('birth_date')).all()
+            list_obj = Person().query_by_birth_date(
+                filter_field.get('birth_date'))
         elif filter_field.get('doc_id'):
-            list_obj = Person.query.filter(
-                Person.birth_date == filter_field.get('doc_id')).all()
+            list_obj = Person().query_by_doc_id(
+                filter_field.get('doc_id'))
 
         serialized_list = []
         for item in list_obj:

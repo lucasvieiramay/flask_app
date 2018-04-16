@@ -17,6 +17,24 @@ class Person(db.Model):
         db.String(150), unique=False, nullable=False)
     birth_date = db.Column(db.Date, unique=False)
 
+    def query_by_name(self, name):
+        name = '%{}%'.format(name)
+        return Person.query.filter(
+            Person.name.ilike(name)).all()
+
+    def query_by_email(self, email):
+        email = '%{}%'.format(email)
+        return Person.query.filter(
+            Person.email.ilike(email)).all()
+
+    def query_by_birth_date(self, birth_date):
+        return Person.query.filter(
+            Person.birth_date == birth_date).all()
+
+    def query_by_doc_id(self, doc_id):
+        return Person.query.filter(
+            Person.birth_date == doc_id).all()
+
 
 class PersonSchema(ma.ModelSchema):
     """
