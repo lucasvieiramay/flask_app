@@ -1,7 +1,6 @@
 import json
-import os
 from flask import Response
-from werkzeug.utils import secure_filename
+
 
 JSON_MIME_TYPE = 'application/json'
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
