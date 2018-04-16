@@ -94,16 +94,18 @@ class PersonService():
             'email': request.form.get('email'),
         }
 
-        # This check if the email has a smtp server, and he really exists
-        # but made the apllication really slow
-        # smtp_verify = validate_email(params['email'], verify=True)
+        if params['email']:
+            # This check if the email has a smtp server, and he really exists
+            # but made the apllication really slow
+            # smtp_verify = validate_email(params['email'], verify=True)
 
-        # This is a simple validador
-        smtp_verify = validate_email(params['email'])
-        if not smtp_verify:
-            return 'fake_email'
+            # This is a simple validador
+            smtp_verify = validate_email(params['email'])
+            if not smtp_verify:
+                return 'fake_email'
 
-        valid_cpf = cpfcnpj.validate(params['doc_id'])
-        if not valid_cpf:
-            return 'fake_cpf'
+        if params['doc_id']:
+            valid_cpf = cpfcnpj.validate(params['doc_id'])
+            if not valid_cpf:
+                return 'fake_cpf'
         return params

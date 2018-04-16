@@ -6,6 +6,15 @@ from persons.models import Person
 
 class TestPersonService(unittest.TestCase):
 
+    def default_params(self):
+        return {
+            "email": "teste@gmail.com",
+            "birth_date": "1994-07-20",
+            "doc_id": "00012345601",
+            "name": "Lucas May",
+            "id": 5
+        }
+
     @patch('persons.services.Person.query_by_name')
     def test_filter_objects_by_name(self, model_mock):
         """
@@ -60,13 +69,7 @@ class TestPersonService(unittest.TestCase):
         """
         Should return all objects serialized
         """
-        params = {
-            "email": "teste@gmail.com",
-            "birth_date": "1994-07-20",
-            "doc_id": "00012345601",
-            "name": "Lucas May",
-            "id": 5
-        }
+        params = self.default_params()
         test_obj = Person(**params)
         model_mock.query.all.return_value = [test_obj]
         serialzier_mock.dump.return_value = [params]
@@ -78,13 +81,7 @@ class TestPersonService(unittest.TestCase):
     def test_add_obj(self, mock_db):
         mock_db.session.add.return_value = True
         mock_db.session.commit.return_value = True
-        params = {
-            "email": "teste@gmail.com",
-            "birth_date": "1994-07-20",
-            "doc_id": "00012345601",
-            "name": "Lucas May",
-            "id": 5
-        }
+        params = self.default_params()
         PersonService().add_obj(**params)
         assert mock_db.session.add.called
         assert mock_db.session.commit.called
