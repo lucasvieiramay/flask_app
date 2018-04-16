@@ -86,13 +86,15 @@ class TestPersonService(unittest.TestCase):
         assert mock_db.session.add.called
         assert mock_db.session.commit.called
 
+    @patch('persons.services.Person')
     @patch('persons.services.db')
-    def test_remove_obj(self, mock_db):
-        mock_db.session.close_all.return_value = True
+    def test_remove_obj(self, mock_db, mock_query):
+        mock_db.session.return_value = True
         mock_db.session.delete.return_value = True
         mock_db.session.commit.return_value = True
         params = self.default_params()
         fake_person = Person(**params)
+        mock_query.return_value = fake_person
         response = PersonService().remove_obj(fake_person)
         assert mock_db.session.close_all.called
         assert mock_db.session.delete.called
