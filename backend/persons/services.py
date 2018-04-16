@@ -2,6 +2,7 @@ from persons.models import Person, PersonSchema
 from flask_sqlalchemy import SQLAlchemy
 from flask import abort
 from validate_email import validate_email
+from pycpfcnpj import cpfcnpj
 
 db = SQLAlchemy()
 
@@ -101,5 +102,9 @@ class PersonService():
         # This is a simple validador
         smtp_verify = validate_email(params['email'])
         if not smtp_verify:
-            return False
+            return 'fake_email'
+
+        valid_cpf = cpfcnpj.validate(params['doc_id'])
+        if not valid_cpf:
+            return 'fake_cpf'
         return params

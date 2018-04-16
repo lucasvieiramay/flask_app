@@ -32,8 +32,11 @@ def person_list():
 def person_add():
     service = PersonService()
     params = service.set_parameters(request)
-    if not params:
+    if params == 'fake_email':
         data = "Email not valid"
+        status_code = 401
+    elif params == 'fake_cpf':
+        data = "CPF or CNPJ not valid"
         status_code = 401
     elif service.validade_field(**params):
         try:
@@ -53,14 +56,18 @@ def person_add():
 def person_edit(id):
     service = PersonService()
     params = service.set_parameters(request)
-    if not params:
+    if params == 'fake_email':
         data = "Email not valid"
         return default_response(data=data, status=401)
-    params['id'] = id
-    data = service.update_obj(**params)
-    if not data:
-        data = 'Error: One of the following ' \
-               'fields are duplicated: name, doc_id, email'
+    elif params == 'fake_cpf':
+        data = "CPF or CNPJ not valid"
+        return default_response(data=data, status=401)
+    else:
+        params['id'] = id
+        data = service.update_obj(**params)
+        if not data:
+            data = 'Error: One of the following ' \
+                   'fields are duplicated: name, doc_id, email'
     return default_response(data=data, status=200)
 
 
