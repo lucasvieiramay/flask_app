@@ -70,11 +70,10 @@ class PersonService():
         db.session.commit()
         return self.person_schema.dump(obj).data
 
-    def remove_obj(self, obj):
-        if isinstance(obj, int):
-            obj = Person.query.filter_by(id=obj).first()
-            if not obj:
-                abort(404)
+    def remove_obj(self, obj_id):
+        obj = Person.query.filter_by(id=obj_id).first()
+        if not obj:
+            abort(404)
         # prevents the object from being used in another session
         db.session.close_all()
         db.session.delete(obj)

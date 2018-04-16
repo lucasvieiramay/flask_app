@@ -92,7 +92,6 @@ class TestPersonService(unittest.TestCase):
         mock_db.session.delete.return_value = True
         mock_db.session.commit.return_value = True
         params = self.default_params()
-        # Test remove with a object
         fake_person = Person(**params)
         response = PersonService().remove_obj(fake_person)
         assert mock_db.session.close_all.called
