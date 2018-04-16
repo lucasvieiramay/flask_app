@@ -102,4 +102,10 @@ class TestPersonService(unittest.TestCase):
         assert response
 
     def test_validate_field(self):
-        pass
+        params = self.default_params()
+        response = PersonService().validate_field(**params)
+        assert response
+        # Now lets call with a missing required field
+        del params['name']
+        response = PersonService().validate_field(**params)
+        assert not response

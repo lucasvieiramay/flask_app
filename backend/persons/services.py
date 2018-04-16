@@ -81,7 +81,8 @@ class PersonService():
         return True
 
     def validate_field(self, **params):
-        if 'name' and 'doc_id' and 'email' in params.keys():
+        if 'name' in params.keys() and 'doc_id' \
+           in params.keys() and 'email' in params.keys():
             return True
         return False
 
