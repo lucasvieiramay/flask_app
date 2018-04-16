@@ -43,6 +43,7 @@ class PersonService():
         return serialized_list
 
     def add_obj(self, **params):
+        db.session.close_all()
         obj = Person(**params)
         db.session.add(obj)
         db.session.commit()
