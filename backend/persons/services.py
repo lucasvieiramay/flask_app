@@ -1,6 +1,7 @@
 from persons.models import Person, PersonSchema
 from flask_sqlalchemy import SQLAlchemy
 from flask import abort
+from validate_email import validate_email
 
 db = SQLAlchemy()
 
@@ -92,4 +93,13 @@ class PersonService():
             'birth_date': request.form.get('birth_date'),
             'email': request.form.get('email'),
         }
+
+        # This check if the email has a smtp server, and he really exists
+        # but made the apllication really slow
+        # smtp_verify = validate_email(params['email'], verify=True)
+
+        # This is a simple validador
+        smtp_verify = validate_email(params['email'])
+        if not smtp_verify:
+            return False
         return params

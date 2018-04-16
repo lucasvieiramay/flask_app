@@ -24,6 +24,8 @@ pkg-resources==0.0.0
 prompt-toolkit==1.0.15
 psycopg2==2.7.4
 ptyprocess==0.5.2
+py3dns==3.1.0
+pycpfcnpj==1.4
 Pygments==2.2.0
 python-dateutil==2.7.2
 python-editor==1.0.3
@@ -31,5 +33,6 @@ simplegeneric==0.8.1
 six==1.11.0
 SQLAlchemy==1.2.6
 traitlets==4.3.2
+validate-email==1.3
 wcwidth==0.1.7
 Werkzeug==0.14.1

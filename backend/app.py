@@ -32,7 +32,10 @@ def person_list():
 def person_add():
     service = PersonService()
     params = service.set_parameters(request)
-    if service.validade_field(**params):
+    if not params:
+        data = "Email not valid"
+        status_code = 401
+    elif service.validade_field(**params):
         try:
             data = service.add_obj(**params)
             status_code = 200
@@ -50,6 +53,9 @@ def person_add():
 def person_edit(id):
     service = PersonService()
     params = service.set_parameters(request)
+    if not params:
+        data = "Email not valid"
+        return default_response(data=data, status=401)
     params['id'] = id
     data = service.update_obj(**params)
     if not data:
