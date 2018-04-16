@@ -109,3 +109,15 @@ class TestPersonService(unittest.TestCase):
         del params['name']
         response = PersonService().validate_field(**params)
         assert not response
+
+    @patch('persons.services.cpfcnpj')
+    @patch('persons.services.validate_email')
+    def test_set_parameters(self, mock_validate_email, mock_validate_cpf):
+        mock_validate_cpf.validate.return_value = True
+        mock_validate_email.return_value = True
+        params = self.default_params()
+        # On these case we have a email and a doc_id
+        # So the code should entry on both ifs
+        PersonService().set_parameters(params)
+        assert mock_validate_email.called
+        assert mock_validate_cpf.validate.called

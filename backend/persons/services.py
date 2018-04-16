@@ -86,12 +86,12 @@ class PersonService():
             return True
         return False
 
-    def set_parameters(self, request):
+    def set_parameters(self, form):
         params = {
-            'name': request.form.get('name'),
-            'doc_id': request.form.get('doc_id'),
-            'birth_date': request.form.get('birth_date'),
-            'email': request.form.get('email'),
+            'name': form.get('name'),
+            'doc_id': form.get('doc_id'),
+            'birth_date': form.get('birth_date'),
+            'email': form.get('email'),
         }
 
         if params['email']:

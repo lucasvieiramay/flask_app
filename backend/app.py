@@ -44,7 +44,7 @@ def person_add():
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             # TODO: Get the file path and name to save on db
 
-    params = service.set_parameters(request)
+    params = service.set_parameters(request.form)
     if params == 'fake_email':
         data = "Email not valid"
         status_code = 401
@@ -69,7 +69,7 @@ def person_add():
 def person_edit(id):
     status_code = 200
     service = PersonService()
-    params = service.set_parameters(request)
+    params = service.set_parameters(request.form)
     if params == 'fake_email':
         data = "Email not valid"
         status_code = 401
