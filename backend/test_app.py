@@ -48,3 +48,23 @@ class TestApiCalls(unittest.TestCase):
         response = self.app.post('/person/add', data=data)
         assert response.status_code == 400
         assert not mock_service.called
+
+    def test_person_add_with_fake_email(self):
+        data = {
+            'name': 'Lucas May',
+            'doc_id': '03773243022',
+            'email': 'thisisnotaemail.com',
+            'birth_date': '20/07/1994',
+        }
+        response = self.app.post('/person/add', data=data)
+        assert response.status_code == 401
+
+    def test_person_add_with_fake_cpf(self):
+        data = {
+            'name': 'Lucas May',
+            'doc_id': '00000000000',
+            'email': 'newemail@gmail.com',
+            'birth_date': '20/07/1994',
+        }
+        response = self.app.post('/person/add', data=data)
+        assert response.status_code == 401
