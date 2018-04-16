@@ -73,3 +73,18 @@ class TestPersonService(unittest.TestCase):
         PersonService().get_all_objects()
         assert model_mock.query.all.called
         assert serialzier_mock.called
+
+    @patch('persons.services.db')
+    def test_add_obj(self, mock_db):
+        mock_db.session.add.return_value = True
+        mock_db.session.commit.return_value = True
+        params = {
+            "email": "teste@gmail.com",
+            "birth_date": "1994-07-20",
+            "doc_id": "00012345601",
+            "name": "Lucas May",
+            "id": 5
+        }
+        PersonService().add_obj(**params)
+        assert mock_db.session.add.called
+        assert mock_db.session.commit.called
