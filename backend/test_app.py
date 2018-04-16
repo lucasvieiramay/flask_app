@@ -38,7 +38,7 @@ class TestApiCalls(unittest.TestCase):
         assert mock_service.called
 
     @patch('persons.services.PersonService.add_obj')
-    def test_person_add_mssing_data(self, mock_service):
+    def test_person_add_missing_data(self, mock_service):
         mock_service.return_value = False
         data = {
             'name': 'Lucas May',
