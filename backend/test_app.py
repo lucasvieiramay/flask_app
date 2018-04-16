@@ -22,12 +22,14 @@ class TestApiCalls(unittest.TestCase):
         assert response.status_code == 200
         assert mock_service.called
 
+    @patch('persons.services.PersonService.validate_field')
     @patch('persons.services.PersonService.add_obj')
-    def test_person_add_correct(self, mock_service):
+    def test_person_add_correct(self, mock_service, mock_cpf):
         mock_service.return_value = True
+        mock_cpf.return_value = True
         data = {
             'name': 'Lucas May',
-            'num_id': '12345612300',
+            'doc_id': '03773243022',
             'email': 'newemail@gmail.com',
             'birth_date': '20/07/1994',
         }
@@ -44,6 +46,5 @@ class TestApiCalls(unittest.TestCase):
             'birth_date': '20/07/1994',
         }
         response = self.app.post('/person/add', data=data)
-        # assert response.status_code == 400
-        # assert not mock_service.called
-        print(response)
+        assert response.status_code == 400
+        assert not mock_service.called

@@ -43,8 +43,7 @@ def person_add():
             filename = secure_filename(file.filename)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             # TODO: Get the file path and name to save on db
-    import ipdb
-    ipdb.set_trace()
+
     params = service.set_parameters(request.form)
     if params == 'fake_email':
         data = "Email not valid"
