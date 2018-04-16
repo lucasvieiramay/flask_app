@@ -84,7 +84,6 @@ class PersonService():
     def validate_field(self, **params):
         required_fields = ['name', 'doc_id', 'email']
         if set(required_fields).issubset(params.keys()):
-            # if all(required_fields) in params.keys():
             return True
         return False
 
