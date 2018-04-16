@@ -51,7 +51,7 @@ def person_add():
     elif params == 'fake_cpf':
         data = "CPF or CNPJ not valid"
         status_code = 401
-    elif service.validade_field(**params):
+    elif service.validate_field(**params):
         try:
             data = service.add_obj(**params)
             status_code = 200

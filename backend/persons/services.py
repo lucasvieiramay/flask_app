@@ -80,7 +80,7 @@ class PersonService():
         db.session.commit()
         return True
 
-    def validade_field(self, **params):
+    def validate_field(self, **params):
         if 'name' and 'doc_id' and 'email' in params.keys():
             return True
         return False

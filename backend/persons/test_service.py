@@ -100,3 +100,6 @@ class TestPersonService(unittest.TestCase):
         assert mock_db.session.delete.called
         assert mock_db.session.commit.called
         assert response
+
+    def test_validate_field(self):
+        pass
