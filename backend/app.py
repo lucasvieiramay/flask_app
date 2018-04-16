@@ -67,21 +67,23 @@ def person_add():
 
 @app.route('/person/edit/<id>', methods=['PATCH'])
 def person_edit(id):
+    status_code = 200
     service = PersonService()
     params = service.set_parameters(request)
     if params == 'fake_email':
         data = "Email not valid"
-        return default_response(data=data, status=401)
+        status_code = 401
     elif params == 'fake_cpf':
         data = "CPF or CNPJ not valid"
-        return default_response(data=data, status=401)
+        status_code = 401
     else:
         params['id'] = id
         data = service.update_obj(**params)
         if not data:
             data = 'Error: One of the following ' \
                    'fields are duplicated: name, doc_id, email'
-    return default_response(data=data, status=200)
+            status_code = 409
+    return default_response(data=data, status=status_code)
 
 
 @app.route('/person/remove/<person_id>', methods=['DELETE'])
