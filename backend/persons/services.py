@@ -10,8 +10,22 @@ class PersonService():
     def __init__(self):
         self.person_schema = PersonSchema()
 
-    def filter_objects(self, **params):
-        list_obj = Person.query.filter(**params)
+    def filter_objects(self, filter_field):
+        list_obj = []
+        if filter_field.get('name'):
+            name = '%{}%'.format(filter_field.get('name'))
+            list_obj = Person.query.filter(
+                Person.name.ilike(name)).all()
+        elif filter_field.get('email'):
+            email = '%{}%'.format(filter_field.get('email'))
+            list_obj = Person.query.filter(Person.email.ilike(email)).all()
+        elif filter_field.get('birth_date'):
+            list_obj = Person.query.filter(
+                Person.birth_date == filter_field.get('birth_date')).all()
+        elif filter_field.get('doc_id'):
+            list_obj = Person.query.filter(
+                Person.birth_date == filter_field.get('doc_id')).all()
+
         serialized_list = []
         for item in list_obj:
             serialized_list.append(
@@ -79,19 +93,3 @@ class PersonService():
             'email': request.form.get('email'),
         }
         return params
-
-    def get_filters(self, request):
-        filters = {}
-        name = request.args.get('name')
-        if name:
-            filters['name'] = name
-        num_id = request.args.get('num_id')
-        if num_id:
-            filters['num_id'] = num_id
-        birth_date = request.args.get('birth_date')
-        if birth_date:
-            filters['birth_date'] = birth_date
-        email = request.args.get('email')
-        if email:
-            filters['email'] = email
-        return filters
