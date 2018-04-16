@@ -71,7 +71,7 @@ class PersonService():
         return self.person_schema.dump(obj).data
 
     def remove_obj(self, obj):
-        if int(obj):
+        if isinstance(obj, int):
             obj = Person.query.filter_by(id=obj).first()
             if not obj:
                 abort(404)
