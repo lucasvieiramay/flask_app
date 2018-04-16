@@ -1,16 +1,18 @@
 import os
 from flask import Flask, request
-from local_settings import POSTGRES
+from local_settings import POSTGRES, UPLOAD_FOLDER
 from flask_sqlalchemy import SQLAlchemy
 from persons.services import PersonService
-from utils import default_response
+from utils import default_response, allowed_file_upload
 from sqlalchemy import exc
+from werkzeug.utils import secure_filename
 
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://%(user)s:\
 %(pw)s@%(host)s:%(port)s/%(db)s' % POSTGRES
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 db = SQLAlchemy(app)
 db.init_app(app)
 
@@ -31,6 +33,17 @@ def person_list():
 @app.route('/person/add', methods=['POST'])
 def person_add():
     service = PersonService()
+
+    if 'file' in request.files:
+        file = request.files['file']
+        if file.filename == '':
+            return False
+        if file and allowed_file_upload(file.filename):
+            # TODO: Check the  size of the file
+            filename = secure_filename(file.filename)
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            # TODO: Get the file path and name to save on db
+
     params = service.set_parameters(request)
     if params == 'fake_email':
         data = "Email not valid"
