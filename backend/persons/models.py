@@ -19,6 +19,10 @@ class Person(db.Model):
 
 
 class PersonSchema(ma.ModelSchema):
+    """
+    This is a serializer, using Marshmallow lib
+    Check out more here -> https://flask-marshmallow.readthedocs.io/en/latest/
+    """
     class Meta:
         model = Person
         fields = ('id', 'name', 'doc_id', 'birth_date', 'email')

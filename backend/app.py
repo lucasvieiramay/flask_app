@@ -18,7 +18,12 @@ db.init_app(app)
 @app.route('/persons/list', methods=['GET'])
 def person_list():
     service = PersonService()
-    data = service.get_all_objects()
+    filters = service.get_filters(request)
+    if not filters:
+        data = service.get_all_objects()
+    else:
+        data = service.filter_objects(**filters)
+
     response = default_response(data=data, status=200)
     return response
 
