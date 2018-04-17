@@ -77,6 +77,7 @@ class TestApiCalls(unittest.TestCase):
             'birth_date': '20/07/1994',
         }
         response = self.app.get('/person/add', data=data)
+        # Should not accept method GET
         assert response.status_code == 405
 
     def test_person_add_with_patch(self):
@@ -87,6 +88,7 @@ class TestApiCalls(unittest.TestCase):
             'birth_date': '20/07/1994',
         }
         response = self.app.patch('/person/add', data=data)
+        # Should not accept method PATCH
         assert response.status_code == 405
 
     @patch('persons.services.PersonService.update_obj')
@@ -111,7 +113,18 @@ class TestApiCalls(unittest.TestCase):
             'birth_date': '20/07/1994',
         }
         response = self.app.post('/person/edit/5', data=data)
+        # Should not accept method POST, only PATCH
         assert response.status_code == 405
 
-    def test_person_edit_with_fake_email(self):
-        pass
+    @patch('persons.services.PersonService.update_obj')
+    def test_person_edit_with_fake_email(self, mock_service):
+        mock_service.return_value = True
+        data = {
+            'id': 5,
+            'name': 'Lucas May',
+            'doc_id': '03773243022',
+            'email': 'faleemail.com',
+            'birth_date': '20/07/1994',
+        }
+        response = self.app.patch('/person/edit/5', data=data)
+        assert response.status_code == 401
