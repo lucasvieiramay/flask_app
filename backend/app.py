@@ -33,17 +33,6 @@ def person_list():
 @app.route('/person/add', methods=['POST'])
 def person_add():
     service = PersonService()
-
-    if 'file' in request.files:
-        file = request.files['file']
-        if file.filename == '':
-            return False
-        if file and allowed_file_upload(file.filename):
-            # TODO: Check the  size of the file
-            filename = secure_filename(file.filename)
-            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            # TODO: Get the file path and name to save on db
-
     params = service.set_parameters(request.form)
     if params == 'fake_email':
         data = "Email not valid"
@@ -55,12 +44,23 @@ def person_add():
         try:
             data = service.add_obj(**params)
             status_code = 200
+            if 'file' in request.files:
+                file = request.files['file']
+                if file.filename == '':
+                    return False
+                if file and allowed_file_upload(file.filename):
+                    root_dir = os.path.dirname(os.path.abspath(__file__))
+                    filename = secure_filename(file.filename)
+                    upload_dir = "{}{}/{}".format(
+                        root_dir, app.config['UPLOAD_FOLDER'], filename)
+                    file.save(upload_dir)
+                    service.save_image_dir(upload_dir, data['id'])
         except exc.IntegrityError as err:
             status_code = 409
             data = 'Error: {}'.format(err)
     else:
         data = 'Error: The following fields are not ' \
-               'nullable: name, doc_id, email'
+            'nullable: name, doc_id, email'
         status_code = 400
     return default_response(data=data, status=status_code)
 
@@ -81,7 +81,7 @@ def person_edit(id):
         data = service.update_obj(**params)
         if not data:
             data = 'Error: One of the following ' \
-                   'fields are duplicated: name, doc_id, email'
+                'fields are duplicated: name, doc_id, email'
             status_code = 409
     return default_response(data=data, status=status_code)
 

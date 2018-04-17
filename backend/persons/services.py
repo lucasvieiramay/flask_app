@@ -111,3 +111,9 @@ class PersonService():
             if not valid_cpf:
                 return 'fake_cpf'
         return params
+
+    def save_image_dir(self, upload_dir, person_id):
+        obj = Person.query.get(person_id)
+        obj.image = upload_dir
+        db.session.commit()
+        return self.person_schema.dump(obj).data

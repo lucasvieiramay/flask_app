@@ -16,6 +16,8 @@ class Person(db.Model):
     name = db.Column(
         db.String(150), unique=False, nullable=False)
     birth_date = db.Column(db.Date, unique=False)
+    image = db.Column(
+        db.String(150), unique=False)
 
     def query_by_name(self, name):
         name = '%{}%'.format(name)
@@ -43,4 +45,6 @@ class PersonSchema(ma.ModelSchema):
     """
     class Meta:
         model = Person
-        fields = ('id', 'name', 'doc_id', 'birth_date', 'email')
+        fields = (
+            'id', 'name', 'doc_id',
+            'birth_date', 'email', 'image')
