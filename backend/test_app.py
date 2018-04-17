@@ -29,7 +29,7 @@ class TestApiCalls(unittest.TestCase):
         mock_cpf.return_value = True
         data = {
             'name': 'Lucas May',
-            'doc_id': '03773243022',
+            'doc_id': '64412905020',
             'email': 'newemail@gmail.com',
             'birth_date': '20/07/1994',
         }
@@ -52,7 +52,7 @@ class TestApiCalls(unittest.TestCase):
     def test_person_add_with_fake_email(self):
         data = {
             'name': 'Lucas May',
-            'doc_id': '03773243022',
+            'doc_id': '64412905020',
             'email': 'thisisnotaemail.com',
             'birth_date': '20/07/1994',
         }
@@ -97,7 +97,7 @@ class TestApiCalls(unittest.TestCase):
         data = {
             'id': 5,
             'name': 'Lucas May',
-            'doc_id': '03773243022',
+            'doc_id': '64412905020',
             'email': 'newemail@gmail.com',
             'birth_date': '20/07/1994',
         }
@@ -108,7 +108,7 @@ class TestApiCalls(unittest.TestCase):
         data = {
             'id': 5,
             'name': 'Lucas May',
-            'doc_id': '03773243022',
+            'doc_id': '64412905020',
             'email': 'newemail@gmail.com',
             'birth_date': '20/07/1994',
         }
@@ -120,7 +120,7 @@ class TestApiCalls(unittest.TestCase):
         data = {
             'id': 5,
             'name': 'Lucas May',
-            'doc_id': '03773243022',
+            'doc_id': '64412905020',
             'email': 'faleemail.com',
             'birth_date': '20/07/1994',
         }
