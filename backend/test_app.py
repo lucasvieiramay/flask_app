@@ -68,3 +68,50 @@ class TestApiCalls(unittest.TestCase):
         }
         response = self.app.post('/person/add', data=data)
         assert response.status_code == 401
+
+    def test_person_add_with_get(self):
+        data = {
+            'name': 'Lucas May',
+            'doc_id': '00000000000',
+            'email': 'newemail@gmail.com',
+            'birth_date': '20/07/1994',
+        }
+        response = self.app.get('/person/add', data=data)
+        assert response.status_code == 405
+
+    def test_person_add_with_patch(self):
+        data = {
+            'name': 'Lucas May',
+            'doc_id': '00000000000',
+            'email': 'newemail@gmail.com',
+            'birth_date': '20/07/1994',
+        }
+        response = self.app.patch('/person/add', data=data)
+        assert response.status_code == 405
+
+    @patch('persons.services.PersonService.update_obj')
+    def test_person_edit(self, mock_service):
+        mock_service.return_value = True
+        data = {
+            'id': 5,
+            'name': 'Lucas May',
+            'doc_id': '03773243022',
+            'email': 'newemail@gmail.com',
+            'birth_date': '20/07/1994',
+        }
+        response = self.app.patch('/person/edit/5', data=data)
+        assert response.status_code == 200
+
+    def test_person_edit_with_post(self):
+        data = {
+            'id': 5,
+            'name': 'Lucas May',
+            'doc_id': '03773243022',
+            'email': 'newemail@gmail.com',
+            'birth_date': '20/07/1994',
+        }
+        response = self.app.post('/person/edit/5', data=data)
+        assert response.status_code == 405
+
+    def test_person_edit_with_fake_email(self):
+        pass
