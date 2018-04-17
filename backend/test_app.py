@@ -138,5 +138,16 @@ class TestApiCalls(unittest.TestCase):
         response = self.app.patch('/person/edit/5', data=data)
         assert response.status_code == 401
 
-    def test_person_remove(self):
-        pass
+    @patch('persons.services.PersonService.remove_obj')
+    def test_person_remove(self, mock_delete):
+        mock_delete.return_value = True
+        response = self.app.delete('/person/remove/5')
+        assert response.status_code == 200
+
+    def test_person_remove_wrong_method(self):
+        response = self.app.post('/person/remove/5')
+        assert response.status_code == 405
+        response = self.app.get('/person/remove/5')
+        assert response.status_code == 405
+        response = self.app.patch('/person/remove/5')
+        assert response.status_code == 405
