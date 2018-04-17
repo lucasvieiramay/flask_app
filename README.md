@@ -56,6 +56,22 @@ UPLOAD_FOLDER = '/uploads'
 
 Create your database with the correct user and password (The same you put on your local settings file)
 
+
+Fire up the database
+```
+python manage.py db init
+```
+
+Run Migrations
+```
+python manage.py db migrate
+```
+
+Run Upgrates
+```
+python manage.py db upgrade
+```
+
 And finally type
 
 ```
