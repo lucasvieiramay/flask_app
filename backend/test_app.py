@@ -116,9 +116,7 @@ class TestApiCalls(unittest.TestCase):
         # Should not accept method POST, only PATCH
         assert response.status_code == 405
 
-    @patch('persons.services.PersonService.update_obj')
-    def test_person_edit_with_fake_email(self, mock_service):
-        mock_service.return_value = True
+    def test_person_edit_with_fake_email(self):
         data = {
             'id': 5,
             'name': 'Lucas May',
@@ -128,3 +126,17 @@ class TestApiCalls(unittest.TestCase):
         }
         response = self.app.patch('/person/edit/5', data=data)
         assert response.status_code == 401
+
+    def test_person_edit_with_fake_cpf(self):
+        data = {
+            'id': 5,
+            'name': 'Lucas May',
+            'doc_id': '00000000000',
+            'email': 'newemail@gmail.com',
+            'birth_date': '20/07/1994',
+        }
+        response = self.app.patch('/person/edit/5', data=data)
+        assert response.status_code == 401
+
+    def test_person_remove(self):
+        pass
