@@ -95,6 +95,17 @@ def person_remove(person_id):
     return default_response(data='Object removed', status=200)
 
 
+@app.route('/person/image/<filename>', methods=['GET'])
+def render_image(filename):
+    from flask import send_file
+    root_dir = os.path.dirname(os.path.abspath(__file__))
+    filename = secure_filename(filename)
+    img_dir = "{}{}/{}".format(
+        root_dir, app.config['UPLOAD_FOLDER'], filename)
+
+    return send_file(img_dir, mimetype='image/jpeg')
+
+
 if __name__ == '__main__':
     app.debug = True
     host = os.environ.get('IP', '0.0.0.0')

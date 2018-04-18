@@ -11,7 +11,6 @@ export class DataService {
 
   getPersons() {
       let routeBack = 'persons/list';
-      console.log(this.backendLocation+routeBack);
       return this.http.get(this.backendLocation+routeBack).map(
         res => res.json())
   }
