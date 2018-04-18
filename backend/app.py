@@ -1,5 +1,6 @@
 import os
 from flask import Flask, request
+from flask_cors import CORS
 from local_settings import POSTGRES, UPLOAD_FOLDER
 from flask_sqlalchemy import SQLAlchemy
 from persons.services import PersonService
@@ -9,6 +10,7 @@ from werkzeug.utils import secure_filename
 
 
 app = Flask(__name__)
+CORS(app)
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://%(user)s:\
 %(pw)s@%(host)s:%(port)s/%(db)s' % POSTGRES

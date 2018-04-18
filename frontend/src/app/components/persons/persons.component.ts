@@ -6,6 +6,7 @@ import { DataService } from '../../services/data.service';
   templateUrl: './persons.component.html',
   styleUrls: ['./persons.component.css']
 })
+
 export class PersonsComponent implements OnInit {
 
     name:string;
@@ -15,12 +16,12 @@ export class PersonsComponent implements OnInit {
     avatar:string;
 
 
-    constructor(private dataService:DataService) {
-    }
-
-  constructor() { }
+    constructor(private dataService:DataService) {}
 
   ngOnInit() {
+      this.dataService.getPersons().subscribe((persons) => {
+          console.log(persons);
+      });
   }
 
 }
