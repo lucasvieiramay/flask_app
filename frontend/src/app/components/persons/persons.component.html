@@ -1,3 +1,30 @@
-<p>
-  persons works!
-</p>
+<head>
+        <!-- Material Design Lite CSS -->
+        <link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.0.0/material.indigo-pink.min.css">
+        <!-- Material Design Lite Font Icons -->
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    </head>
+
+    <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
+            <thead>
+                <tr>
+                    <th>Avatar</th>
+                    <th>Nome</th>
+                    <th>Cpf</th>
+                    <th>Email</th>
+                    <th>Data de nascimento</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let person of persons">
+                    <td>{{person.picture}}</td>
+                    <td>{{person.name}}</td>
+                    <td>{{person.doc_num}}</td>
+                    <td>{{person.email}}</td>
+                    <td>{{person.birthDate}}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- Material Design Lite JavaScript -->
+<script src="https://storage.googleapis.com/code.getmdl.io/1.0.0/material.min.js"></script>

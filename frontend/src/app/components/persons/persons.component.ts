@@ -9,18 +9,13 @@ import { DataService } from '../../services/data.service';
 
 export class PersonsComponent implements OnInit {
 
-    name:string;
-    email:string;
-    docNum:number;
-    birthDate:string;
-    avatar:string;
-
+    persons = [];
 
     constructor(private dataService:DataService) {}
 
   ngOnInit() {
       this.dataService.getPersons().subscribe((persons) => {
-          console.log(persons);
+          this.persons = persons;
       });
   }
 
