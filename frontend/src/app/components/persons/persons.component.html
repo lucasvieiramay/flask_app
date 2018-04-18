@@ -18,12 +18,12 @@
             <tbody>
                 <tr *ngFor="let person of persons">
                     <td>
-                        <img [src]="getImage(person.image)" border=3 height=100 width=100 />
+                        <img class="imgCustom" [src]="getImage(person.image)" height="75" width="75"/>
                     </td>
                     <td>{{person.name}}</td>
-                    <td>{{person.doc_num}}</td>
+                    <td>{{person.doc_id}}</td>
                     <td>{{person.email}}</td>
-                    <td>{{person.birthDate}}</td>
+                    <td>{{person.birth_date}}</td>
                 </tr>
             </tbody>
         </table>

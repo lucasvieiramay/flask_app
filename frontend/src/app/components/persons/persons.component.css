@@ -7,3 +7,8 @@ table {
     margin-bottom: 40px;
     margin-right: auto;
 }
+
+.imgCustom {
+    border-radius: 55px;
+    border: none;
+}
