@@ -3,11 +3,11 @@ from flask import Flask, request
 from flask_cors import CORS
 from flask import send_file
 from flask_sqlalchemy import SQLAlchemy
-from werkzeug.utils import secure_filename
 from local_settings import POSTGRES, UPLOAD_FOLDER
 from persons.services import PersonService
-from utils import default_response, allowed_file_upload
+from utils import default_response
 from sqlalchemy import exc
+from werkzeug.utils import secure_filename
 
 
 app = Flask(__name__)
@@ -15,7 +15,6 @@ CORS(app)
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://%(user)s:\
 %(pw)s@%(host)s:%(port)s/%(db)s' % POSTGRES
-app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 db = SQLAlchemy(app)
 db.init_app(app)
 
@@ -45,19 +44,11 @@ def person_add():
         status_code = 401
     elif service.validate_field(**params):
         try:
+            if 'file' in request.files:
+                params['file'] = request.files['file']
             data = service.add_obj(**params)
             status_code = 200
-            if 'file' in request.files:
-                file = request.files['file']
-                if file.filename == '':
-                    return False
-                if file and allowed_file_upload(file.filename):
-                    root_dir = os.path.dirname(os.path.abspath(__file__))
-                    filename = secure_filename(file.filename)
-                    upload_dir = "{}{}/{}".format(
-                        root_dir, app.config['UPLOAD_FOLDER'], filename)
-                    file.save(upload_dir)
-                    service.save_image_dir(upload_dir, data['id'])
+
         except exc.IntegrityError as err:
             status_code = 409
             data = 'Error: {}'.format(err)
@@ -100,8 +91,8 @@ def person_remove(person_id):
 def render_image(filename):
     root_dir = os.path.dirname(os.path.abspath(__file__))
     filename = secure_filename(filename)
-    img_dir = "{}{}/{}".format(
-        root_dir, app.config['UPLOAD_FOLDER'], filename)
+    img_dir = "{}{}{}/{}".format(
+        root_dir, '/persons/', UPLOAD_FOLDER, filename)
 
     return send_file(img_dir, mimetype='image/jpeg')
 

@@ -1,9 +1,13 @@
 import os
+from werkzeug.utils import secure_filename
+from utils import allowed_file_upload
 from persons.models import Person, PersonSchema
 from flask_sqlalchemy import SQLAlchemy
 from flask import abort
 from validate_email import validate_email
 from pycpfcnpj import cpfcnpj
+from local_settings import UPLOAD_FOLDER
+
 
 db = SQLAlchemy()
 
@@ -44,6 +48,20 @@ class PersonService():
         return serialized_list
 
     def add_obj(self, **params):
+        if 'file' in params.keys():
+            file = params['file']
+            if file.filename == '':
+                return False
+            if file and allowed_file_upload(file.filename):
+                root_dir = os.path.dirname(os.path.abspath(__file__))
+                filename = secure_filename(file.filename)
+                upload_dir = "{}{}/{}".format(
+                    root_dir, UPLOAD_FOLDER, filename)
+                file.save(upload_dir)
+                # Remove file from params
+                del params['file']
+                # Add the image to save on obj
+                params['image'] = upload_dir
         db.session.close_all()
         obj = Person(**params)
         db.session.add(obj)
@@ -101,6 +119,9 @@ class PersonService():
             'birth_date': form.get('birth_date'),
             'email': form.get('email'),
         }
+        file = form.get('file')
+        if file:
+            params['file'] = file
 
         if params['email']:
             # This check if the email has a smtp server, and he really exists
@@ -117,9 +138,3 @@ class PersonService():
             if not valid_cpf:
                 return 'fake_cpf'
         return params
-
-    def save_image_dir(self, upload_dir, person_id):
-        obj = Person.query.get(person_id)
-        obj.image = upload_dir
-        db.session.commit()
-        return self.person_schema.dump(obj).data
