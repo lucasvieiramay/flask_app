@@ -1,12 +1,13 @@
 import os
 from flask import Flask, request
 from flask_cors import CORS
-from local_settings import POSTGRES, UPLOAD_FOLDER
+from flask import send_file
 from flask_sqlalchemy import SQLAlchemy
+from werkzeug.utils import secure_filename
+from local_settings import POSTGRES, UPLOAD_FOLDER
 from persons.services import PersonService
 from utils import default_response, allowed_file_upload
 from sqlalchemy import exc
-from werkzeug.utils import secure_filename
 
 
 app = Flask(__name__)
@@ -97,7 +98,6 @@ def person_remove(person_id):
 
 @app.route('/person/image/<filename>', methods=['GET'])
 def render_image(filename):
-    from flask import send_file
     root_dir = os.path.dirname(os.path.abspath(__file__))
     filename = secure_filename(filename)
     img_dir = "{}{}/{}".format(

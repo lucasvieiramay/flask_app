@@ -1,3 +1,4 @@
+import os
 from persons.models import Person, PersonSchema
 from flask_sqlalchemy import SQLAlchemy
 from flask import abort
@@ -75,11 +76,16 @@ class PersonService():
         obj = Person.query.filter_by(id=obj_id).first()
         if not obj:
             abort(404)
+        if obj.image:
+            self.delete_image(obj.image)
         # prevents the object from being used in another session
         db.session.close_all()
         db.session.delete(obj)
         db.session.commit()
         return True
+
+    def delete_image(self, image):
+        return os.remove(image)
 
     def validate_field(self, **params):
         required_fields = ['name', 'doc_id', 'email']
