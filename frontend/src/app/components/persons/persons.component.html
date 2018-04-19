@@ -18,7 +18,7 @@
             <tbody>
                 <tr *ngFor="let person of persons" (click)="editProfile(person.id)">
                     <td>
-                        <img class="imgCustom" [src]="getImage(person.image)" height="75" width="75"/>
+                        <img contenteditable="true" style="cursor: copy;" class="imgCustom" [src]="getImage(person.image)" height="75" width="75"/>
                     </td>
                     <td contenteditable="true" style="cursor: text;">{{person.name}}</td>
                     <td contenteditable="true" style="cursor: text;">{{person.doc_id}}</td>
