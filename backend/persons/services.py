@@ -53,15 +53,25 @@ class PersonService():
             if file.filename == '':
                 return False
             if file and allowed_file_upload(file.filename):
-                root_dir = os.path.dirname(os.path.abspath(__file__))
+                # Check the size of the file
+                # Save on tmp to check the size
+                # And only after that really saves
                 filename = secure_filename(file.filename)
-                upload_dir = "{}{}/{}".format(
-                    root_dir, UPLOAD_FOLDER, filename)
-                file.save(upload_dir)
+                tmp_dir = '/tmp/{}'.format(filename)
+                file.save(tmp_dir)
+                size = os.stat(tmp_dir).st_size
+                if size < 1e+6:
+                    root_dir = os.path.dirname(os.path.abspath(__file__))
+                    upload_dir = "{}{}/{}".format(
+                        root_dir, UPLOAD_FOLDER, filename)
+                    # The image has less then 1mb, lets move to the real folder
+                    os.rename(tmp_dir, upload_dir)
+                    # Add the image to save on obj
+                    params['image'] = upload_dir
+
                 # Remove file from params
                 del params['file']
-                # Add the image to save on obj
-                params['image'] = upload_dir
+
         db.session.close_all()
         obj = Person(**params)
         db.session.add(obj)
