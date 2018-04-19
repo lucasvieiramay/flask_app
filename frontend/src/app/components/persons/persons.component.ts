@@ -19,8 +19,8 @@ export class PersonsComponent implements OnInit {
       });
   }
 
-  getImage(imagePath){
-      if (!imagePath){
+  getImage(imagePath) {
+      if (!imagePath) {
            return "http://localhost:8080/person/image/default.png";
       }
       let correctPath = imagePath.split('/');
@@ -28,5 +28,9 @@ export class PersonsComponent implements OnInit {
       // Join with project url
       // TODO: Get this from a config file
       return "http://localhost:8080/person/image/" + correctPath;
+  }
+
+  editProfile(profileId) {
+      console.log(profileId);
   }
 }
