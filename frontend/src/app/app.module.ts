@@ -3,6 +3,10 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HttpModule } from '@angular/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
+// Third part libs
+import { ContenteditableDirective } from 'ng-contenteditable';
 
 // Components imports
 import { AppComponent } from './app.component';
@@ -20,12 +24,15 @@ const appRoutes: Routes = [
 @NgModule({
   declarations: [
     AppComponent,
-    PersonsComponent
+    PersonsComponent,
+    ContenteditableDirective
   ],
   imports: [
     RouterModule.forRoot(appRoutes),
     BrowserModule,
-    HttpModule
+    HttpModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [
     // We manually need to import the services and declare as providers
