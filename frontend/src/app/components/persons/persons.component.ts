@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from '../../services/data.service';
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-persons',
@@ -28,9 +29,5 @@ export class PersonsComponent implements OnInit {
       // Join with project url
       // TODO: Get this from a config file
       return "http://localhost:8080/person/image/" + correctPath;
-  }
-
-  editProfile(profileId) {
-      console.log(profileId);
   }
 }

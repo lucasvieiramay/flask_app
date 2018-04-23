@@ -16,14 +16,14 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let person of persons" (click)="editProfile(person.id)">
+                <tr *ngFor="let person of persons" [routerLink]="['/person-detail', person.id]">
                     <td>
-                        <img contenteditable="true" style="cursor: copy;" class="imgCustom" [src]="getImage(person.image)" height="75" width="75"/>
+                        <img class="imgCustom" [src]="getImage(person.image)" height="75" width="75"/>
                     </td>
-                    <td contenteditable="true" style="cursor: text;">{{person.name}}</td>
-                    <td contenteditable="true" style="cursor: text;">{{person.doc_id}}</td>
-                    <td contenteditable="true" style="cursor: text;">{{person.email}}</td>
-                    <td contenteditable="true" style="cursor: text;">{{person.birth_date}}</td>
+                    <td>{{person.name}}</td>
+                    <td>{{person.doc_id}}</td>
+                    <td>{{person.email}}</td>
+                    <td>{{person.birth_date}}</td>
                 </tr>
             </tbody>
         </table>

@@ -11,6 +11,7 @@ import { ContenteditableDirective } from 'ng-contenteditable';
 // Components imports
 import { AppComponent } from './app.component';
 import { PersonsComponent } from './components/persons/persons.component';
+import { PersonDetailComponent } from './components/person-detail/person-detail.component';
 
 // Services imports
 import { DataService } from './services/data.service';
@@ -18,6 +19,7 @@ import { DataService } from './services/data.service';
 // Routes config
 const appRoutes: Routes = [
   { path: '',      component: PersonsComponent },
+  { path: 'person-detail/:id', component: PersonDetailComponent },
 ];
 
 
@@ -25,7 +27,8 @@ const appRoutes: Routes = [
   declarations: [
     AppComponent,
     PersonsComponent,
-    ContenteditableDirective
+    ContenteditableDirective,
+    PersonDetailComponent
   ],
   imports: [
     RouterModule.forRoot(appRoutes),
