@@ -1,3 +1,87 @@
-<p>
-  person-detail works!
-</p>
+<div class="col-md-7">
+    <button type="button" class="btn btn-light">Light</button>
+    <div class="form-wrapper">
+        <form action="" class="material-form">
+            <div class="material-form__item">
+                <label for="name" class="material-form__label">Name</label>
+                <input type="text" required="required" id="name" class="material-form__field">
+            </div>
+
+            <div class="material-form__item">
+                <label for="email" class="material-form__label">Email</label>
+                <input type="email" required="required" id="email" class="material-form__field">
+            </div>
+
+            <div class="material-form__item">
+                <select name="question" id="question" class="material-form__field" required="required">                                        <option value="" style="display: none">General Question</option>
+                    <option value="">Question 1</option>
+                    <option value="">Question 2</option>
+                    <option value="">Question 3</option>
+                </select>
+            </div>
+
+            <div class="material-form__item">
+                <label for="massage" class="material-form__label">Massage</label>
+                <input type="text" required="required" id="massage" class="material-form__field">
+            </div>
+
+            <button class="butn butn-default ripple-effect" data-color="#fff">Update</button>
+            <button class="butn butn-red ripple-effect" data-color="#fff">Delete</button>
+        </form>
+    </div>
+</div>
+
+
+<script>
+// Material form
+var materialForm;
+materialForm = function() {
+    return $('.material-form__field').focus(function() {
+        return $(this).closest('.material-form__item').addClass('focused has-value');
+    }).focusout(function() {
+        return $(this).closest('.material-form__item').removeClass('focused');
+    }).blur(function() {
+        if (!this.value) {
+            $(this).closest('.material-form__item').removeClass('has-value');
+        }
+        return $(this).closest('.material-form__item').removeClass('focused');
+    });
+};
+$(function() {
+    return materialForm();
+});
+
+// Material button, ripple-effect
+(function($) {
+    $(".ripple-effect").click(function(e){
+        var rippler = $(this);
+
+        // create .ink element if it doesn't exist
+        if(rippler.find(".ink").length == 0) {
+            rippler.append("<span class='ink'></span>");
+        }
+
+        var ink = rippler.find(".ink");
+
+        // prevent quick double clicks
+        ink.removeClass("animate");
+
+        // set .ink diametr
+        if(!ink.height() && !ink.width())
+        {
+            var d = Math.max(rippler.outerWidth(), rippler.outerHeight());
+            ink.css({height: d, width: d});
+        }
+
+        // get click coordinates
+        var x = e.pageX - rippler.offset().left - ink.width()/2;
+        var y = e.pageY - rippler.offset().top - ink.height()/2;
+
+        // set .ink position and add class .animate
+        ink.css({
+          top: y+'px',
+          left:x+'px'
+        }).addClass("animate");
+    })
+})(jQuery);
+</script>

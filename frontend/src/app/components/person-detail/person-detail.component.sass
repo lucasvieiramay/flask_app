@@ -1,0 +1,124 @@
+$mainFont: Arial, sans-serif
+.form-wrapper
+    max-width: 400px
+    margin: 40px auto
+
+// Material form
+.material-form__item
+    position: relative
+    margin-top: 16px
+    margin-bottom: 26px
+    &:after
+        height: 2px
+        background-color: #cecfcf
+        width: 100%
+    &:before
+        height: 2px
+        background: #E91E63
+        z-index: 1
+        width: 0
+        transition: width .3s
+    &:after, &:before
+        display: block
+        content: ''
+        position: absolute
+        bottom: 0
+    &.error
+        margin-bottom: 36px
+        &:before
+            background-color: #f7406b
+    &.focused
+        &:before
+            width: 100%
+
+.error small.error
+    position: absolute
+    background: transparent
+    color: #f7406b
+    font-style: normal
+    padding-left: 0
+
+.material-form__label
+    display: block
+    width: 100%
+    position: absolute
+    top: 50%
+    transform: translateY(-50%)
+    line-height: 1
+    cursor: text
+    color: #3e3e3e
+    font-size: 16px
+    font-weight: 500
+    transition: transform ease .3s, color ease .3s
+    transform-origin: 0 0
+    .error &
+        color: #f7406b
+    .focused &
+        transform: translateY(-220%) scale(.9)
+        color: #E91E63
+    .error.focused &
+        color: #f7406b
+    .has-value &
+        transform: translateY(-220%) scale(.9)
+
+input, textarea, select
+    &.material-form__field
+        box-sizing: border-box
+        background-color: #fff
+        border: 0
+        outline: 0
+        width: 100%
+        font-family: $mainFont
+        border-width: 0
+        padding-left: 0
+        padding-right: 0
+        box-shadow: none
+        margin: 0
+        height: 46px
+        color: #3e3e3e
+        font-size: 16px
+        font-weight: 500
+        appearance: none
+        &:focus
+            box-shadow: none
+            background: none
+
+// Material button
+.butn
+    border: none
+    color: white
+    overflow: hidden
+    padding: 0
+    text-transform: uppercase
+    min-width: 150px
+    height: 40px
+    font-size: 18px
+    font-weight: 700
+    box-shadow: 9.5px 16.5px 43px rgba(1, 1, 1, 0.26)
+    &.butn-default
+        background-color: #13d54d
+
+    &.butn-red
+        background-color: #d9534f
+
+.ripple-effect
+    position: relative
+    overflow: hidden
+    transform: translate3d(0, 0, 0)
+
+.ink
+    display: block
+    position: absolute
+    pointer-events: none
+    border-radius: 50%
+    transform: scale(0)
+    background: #fff
+    opacity: 1
+    &.animate
+        animation: ripple .5s linear
+
+// animation effect
+@keyframes ripple
+    100%
+        opacity: 0
+        transform: scale(2.5)
