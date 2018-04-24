@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/catch';
 
 @Injectable()
 export class DataService {
@@ -17,9 +18,11 @@ export class DataService {
 
   updatePerson(objectId, formData) {
       // TODO: Get this from a enviroment variable
-      let endpoint = "http://localhost:8080/person/edit/" + objectId
-      console.log(endpoint);
-      return this.http.patch(endpoint, formData).map(
-          response => response.json())
+      let endpoint = "http://localhost:8080/person/edit/" + objectId;
+
+      return this.http.patch(endpoint, formData).catch(err => {
+         alert(err._body);
+          return Observable.throw(err);
+      }).map(response => response.json());
   }
 }

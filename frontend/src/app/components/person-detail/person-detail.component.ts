@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import { DataService } from '../../services/data.service'
 
@@ -49,6 +49,7 @@ export class PersonDetailComponent implements OnInit {
     return this.dataService.updatePerson(
       this.person['id'], data).subscribe((response) => {
           alert('Sucess updated');
-      });
-    }
+          this.router.navigate(['']);
+    });
+  }
 }
