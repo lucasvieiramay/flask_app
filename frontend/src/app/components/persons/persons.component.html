@@ -1,9 +1,9 @@
 <head>
-        <!-- Material Design Lite CSS -->
-        <link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.0.0/material.indigo-pink.min.css">
-        <!-- Material Design Lite Font Icons -->
-        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    </head>
+    <!-- Material Design Lite CSS -->
+    <link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.0.0/material.indigo-pink.min.css">
+    <!-- Material Design Lite Font Icons -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+</head>
 
     <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
             <thead>
@@ -16,7 +16,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let person of persons" [routerLink]="['/person-detail', person.id]">
+                <tr *ngFor="let person of persons" [routerLink]="['/person-detail', person.id]" style="cursor:pointer">
                     <td>
                         <img class="imgCustom" [src]="getImage(person.image)" height="75" width="75"/>
                     </td>

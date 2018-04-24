@@ -1,4 +1,5 @@
 @import url("//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.min.css");
+
 .menu, .menu-bar {
     position: fixed;
     top: 0;
@@ -138,7 +139,6 @@
         height:3.5em;
     }
 }
-
-.containerCustom {
-    margin-top: 100px;
+.container-fluid {
+    margin-top: 30px;
 }
