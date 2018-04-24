@@ -13,10 +13,11 @@
                     <th>Cpf</th>
                     <th>Email</th>
                     <th>Data de nascimento</th>
+                    <th>ID</th>
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let person of persons" [routerLink]="['/person-detail', person.id]" style="cursor:pointer">
+                <tr *ngFor="let person of persons; trackBy:id" [routerLink]="['/person-detail', person.id]" style="cursor:pointer">
                     <td>
                         <img class="imgCustom" [src]="getImage(person.image)" height="75" width="75"/>
                     </td>
@@ -24,6 +25,7 @@
                     <td>{{person.doc_id}}</td>
                     <td>{{person.email}}</td>
                     <td>{{person.birth_date}}</td>
+                    <td>{{person.id}}</td>
                 </tr>
             </tbody>
         </table>

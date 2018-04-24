@@ -1,32 +1,32 @@
 <div class="row">
     <div class="col-6 mx-auto m-t-lg">
-        <form class="material-form">
+        <form class="material-form" (submit)="submitForm(name.value, email.value, doc_id.value, birth_date.value)">
             <div class="container">
                 <div class="material-input">
-                    <input class="input-item" type="text" required id="input-field1">
+                    <input class="input-item" type="text" id="input-field1" #name required>
                     <label>{{person.name}}</label>
                     <span class="bar"></span>
                 </div>
 
                 <div class="material-input">
-                    <input class="input-item" type="text" required id="input-field">
+                    <input class="input-item" type="text" id="input-field" #email required>
                     <label>{{person.email}}</label>
                     <span class="bar"></span>
                 </div>
 
                 <div class="material-input">
-                    <input class="input-item" type="text" required id="input-field">
+                    <input class="input-item" type="text" id="input-field" #doc_id required>
                     <label>{{person.doc_id}}</label>
                     <span class="bar"></span>
                 </div>
                 <div class="material-input">
-                    <input class="input-item" type="text" required id="input-field">
+                    <input class="input-item" type="text" id="input-field" #birth_date required>
                     <label>{{person.birth_date}}</label>
                     <span class="bar"></span>
                 </div>
             </div>
-            <div style="text-align: center">
-                <button type="button" class="btn btn-lg btn-default">Edit profile</button>
+            <div style="text-align: right">
+                <button type="submit" class="btn btn-lg btn-default">Edit profile</button>
                 <button type="button" class="btn btn-lg btn-danger">Delete</button>
             </div>
         </form>

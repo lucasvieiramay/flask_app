@@ -15,4 +15,11 @@ export class DataService {
         res => res.json())
   }
 
+  updatePerson(objectId, formData) {
+      // TODO: Get this from a enviroment variable
+      let endpoint = "http://localhost:8080/person/edit/" + objectId
+      console.log(endpoint);
+      return this.http.patch(endpoint, formData).map(
+          response => response.json())
+  }
 }
