@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import { DataService } from '../../services/data.service'
 
@@ -17,6 +17,7 @@ export class PersonDetailComponent implements OnInit {
 
   constructor(
       private route: ActivatedRoute,
+      private router: Router,
       private dataService: DataService) { }
 
   ngOnInit() {
@@ -29,6 +30,13 @@ export class PersonDetailComponent implements OnInit {
                 }
             }
         }
+    });
+  }
+
+  deletePerson() {
+    return this.dataService.deletePerson(this.person['id']).subscribe((response) => {
+        alert('Person deleted!');
+        this.router.navigate(['']);
     });
   }
 
@@ -48,7 +56,7 @@ export class PersonDetailComponent implements OnInit {
     }
     return this.dataService.updatePerson(
       this.person['id'], data).subscribe((response) => {
-          alert('Sucess updated');
+          alert('Update with Success!');
           this.router.navigate(['']);
     });
   }

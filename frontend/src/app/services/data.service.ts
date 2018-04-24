@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
+import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class DataService {
@@ -22,7 +23,13 @@ export class DataService {
 
       return this.http.patch(endpoint, formData).catch(err => {
          alert(err._body);
-          return Observable.throw(err);
+         return Observable.throw(err._body);
       }).map(response => response.json());
+  }
+
+  deletePerson(objectId){
+      // TODO: Get this from a enviroment variable
+      let endpoint = "http://localhost:8080/person/remove/" + objectId;
+      return this.http.delete(endpoint).map(response => response.json());
   }
 }
