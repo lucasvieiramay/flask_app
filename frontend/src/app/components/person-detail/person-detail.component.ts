@@ -34,10 +34,12 @@ export class PersonDetailComponent implements OnInit {
   }
 
   deletePerson() {
-    return this.dataService.deletePerson(this.person['id']).subscribe((response) => {
-        alert('Person deleted!');
-        this.router.navigate(['']);
-    });
+   if(window.confirm('Are sure you want to delete this item ?')){
+       return this.dataService.deletePerson(this.person['id']).subscribe((response) => {
+           alert('Person deleted!');
+           this.router.navigate(['']);
+       });
+    }
   }
 
   submitForm(name, email, doc_id, birth_date) {
