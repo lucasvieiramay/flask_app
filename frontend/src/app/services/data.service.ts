@@ -31,6 +31,7 @@ export class DataService {
       // TODO: Get this from a enviroment variable
       let endpoint = "http://localhost:8080/person/add";
       return this.http.post(endpoint, formData).catch(err => {
+         console.log(err);
          alert(err._body);
          return Observable.throw(err._body);
       }).map(response => response.json());

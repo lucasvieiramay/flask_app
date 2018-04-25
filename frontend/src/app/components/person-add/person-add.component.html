@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-6 mx-auto m-t-lg">
-        <form class="material-form" (submit)="submitForm(name.value, email.value, doc_id.value, birth_date.value)">
+        <form class="material-form" (submit)="submitForm(name.value, email.value, doc_id.value, birth_date.value, avatar)">
             <div class="container">
                 <div class="material-input">
                     <input class="input-item" type="text" id="input-field1" #name required>
@@ -22,6 +22,15 @@
                 <div class="material-input">
                     <input class="input-item" type="text" id="input-field" #birth_date required>
                     <label>Birth Date</label>
+                    <span class="bar"></span>
+                </div>
+                <div class="row">
+                    <div class="material-input col-md-6">
+                        <label for="files">Select your Avatar</label>
+                    </div>
+                    <div class="col-md-6">
+                        <input type="file" id="files" #avatar required/>
+                    </div>
                     <span class="bar"></span>
                 </div>
             </div>

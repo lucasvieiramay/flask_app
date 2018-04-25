@@ -14,7 +14,7 @@ export class PersonAddComponent implements OnInit {
 
   ngOnInit() {
   }
-  submitForm(name, email, doc_id, birth_date) {
+  submitForm(name, email, doc_id, birth_date, file) {
     let data = new FormData();
     if (name) {
         data.append('name', name);
@@ -27,6 +27,9 @@ export class PersonAddComponent implements OnInit {
     }
     if (birth_date) {
         data.append('birth_date', birth_date);
+    }
+    if (file) {
+        data.append('file', file.files[0], file.files[0].name);
     }
     return this.dataService.addPerson(data).subscribe((response) => {
           alert('Person sucessfully created!');
