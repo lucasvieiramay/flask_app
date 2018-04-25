@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { NgForm } from '@angular/forms';
-import { DataService } from '../../services/data.service'
+import { DataService } from '../../services/data.service';
 
 @Component({
   selector: 'app-person-detail',

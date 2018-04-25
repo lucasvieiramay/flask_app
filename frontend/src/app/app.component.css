@@ -39,6 +39,12 @@
 .menu li a.search:before {
   content: "\f002";
 }
+.menu li a.graphs:before {
+  content: "\f1fe";
+}
+.menu li a.addPerson:before {
+  content: "\f067";
+}
 .menu li a.archive:before {
   content: "\f187";
 }

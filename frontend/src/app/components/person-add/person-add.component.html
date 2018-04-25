@@ -4,30 +4,29 @@
             <div class="container">
                 <div class="material-input">
                     <input class="input-item" type="text" id="input-field1" #name required>
-                    <label>{{person.name}}</label>
+                    <label>Name</label>
                     <span class="bar"></span>
                 </div>
 
                 <div class="material-input">
                     <input class="input-item" type="text" id="input-field" #email required>
-                    <label>{{person.email}}</label>
+                    <label>E-mail</label>
                     <span class="bar"></span>
                 </div>
 
                 <div class="material-input">
                     <input class="input-item" type="text" id="input-field" #doc_id required>
-                    <label>{{person.doc_id}}</label>
+                    <label>CPF</label>
                     <span class="bar"></span>
                 </div>
                 <div class="material-input">
                     <input class="input-item" type="text" id="input-field" #birth_date required>
-                    <label>{{person.birth_date}}</label>
+                    <label>Birth Date</label>
                     <span class="bar"></span>
                 </div>
             </div>
             <div style="text-align: right">
-                <button type="submit" class="btn btn-lg btn-primary">Update profile</button>
-                <button (click)="deletePerson()" type="button" class="btn btn-lg btn-default">Delete profile</button>
+                <button type="submit" class="btn btn-lg btn-success">Create Person</button>
             </div>
         </form>
     </div>
