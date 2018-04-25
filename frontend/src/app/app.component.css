@@ -40,9 +40,9 @@
   content: "\f002";
 }
 .menu li a.graphs:before {
-  content: "\f1fe";
+  content: "\f080";
 }
-.menu li a.addPerson:before {
+.menu li a.addperson:before {
   content: "\f067";
 }
 .menu li a.archive:before {
